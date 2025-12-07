@@ -8,6 +8,7 @@ import DataProcessingNotice from './rsvp/DataProcessingNotice';
 import ContactPhones from './rsvp/ContactPhones';
 import AddToCalendar from './rsvp/AddToCalendar';
 import DeadlineReminder from './rsvp/DeadlineReminder';
+import UsefulInfoSection from './rsvp/UsefulInfoSection';
 
 interface RsvpFormProps {
     guestName?: string;
@@ -182,6 +183,8 @@ const RsvpForm = ({ maxAdults = 2, maxChildren = 0, maxUnder10 = 0, link = windo
                     </div>
                 </div>
             )}
+
+            {!declined && (<UsefulInfoSection />)}
         </section>
     );
 };
