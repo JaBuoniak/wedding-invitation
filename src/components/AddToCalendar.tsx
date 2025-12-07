@@ -7,8 +7,8 @@ const AddToCalendar = () => {
     return (
         <section className="section" style={{ backgroundColor: 'var(--color-secondary)' }}>
             <Calendar size={32} style={{ marginBottom: '1rem', color: 'var(--color-primary)' }} />
-            <h2>Dodaj do kalendarza</h2>
-            <p style={{ marginBottom: '1.5rem' }}>Nie zapomnij o naszej dacie!</p>
+            <h2>Nie zapomnij o naszej dacie!</h2>
+            <p style={{ marginBottom: '1.5rem' }}>Dodaj do kalendarza</p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', maxWidth: '300px', margin: '0 auto' }}>
                 <a href={googleLink} target="_blank" rel="noopener noreferrer" className="btn">

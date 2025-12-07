@@ -1,17 +1,41 @@
+type GuestProps = {
+    who: string;
+    and?: string | null;
+    with?: string | null;
+};
 
+// Default props for development/preview
+const defaultGuest: GuestProps = {
+    who: "Annę Nowak",
+    and: "Jana Nowaka",
+    with: "Lilią i Malwiną"
+};
 
-const InvitationContent = () => {
+const InvitationContent = ({ who, and, with: withChildren }: GuestProps = defaultGuest) => {
     return (
         <section className="section">
-            <p style={{ marginBottom: '1.5rem', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '0.9rem' }}>
-                Mamy zaszczyt zaprosić
+            <p style={{ marginBottom: '0.5rem' }}>
+                mają zaszczyt zaprosić
             </p>
 
-            <div style={{ margin: '2rem 0', fontFamily: 'var(--font-serif)', fontSize: '1.5rem' }}>
-                <p>Sz. P. Annę Nowak</p>
-                <p>Jana Nowaka</p>
-                <p style={{ fontSize: '1.2rem', marginTop: '0.5rem' }}>wraz z dziećmi</p>
-                <p style={{ fontSize: '1.2rem' }}>Lilią i Malwiną</p>
+            <div style={{ margin: '2rem 0', fontFamily: 'var(--font-serif)', fontSize: '2rem' }}>
+                <p style={{ fontSize: '1.2rem', marginTop: '0.5rem' }}>Sz.P. </p>
+
+                <p>{who}</p>
+
+                {and && (
+                    <>
+                        <p style={{ fontSize: '1.2rem', marginTop: '-0.5rem', marginBottom: '-0.7rem' }}>i</p>
+                        <p>{and}</p>
+                    </>
+                )}
+
+                {withChildren && (
+                    <>
+                        <p style={{ fontSize: '1.2rem', marginTop: '0.5rem' }}>wraz z</p>
+                        <p style={{ fontSize: '2rem' }}>{withChildren}</p>
+                    </>
+                )}
             </div>
 
             <p style={{ marginBottom: '1rem' }}>
@@ -19,9 +43,9 @@ const InvitationContent = () => {
             </p>
 
             <p style={{ fontSize: '1.2rem', fontWeight: 600, color: 'var(--color-primary)' }}>
-                dnia 7 lipca 2025 roku
+                13 czerwca 2026 roku
             </p>
-            <p>o godzinie 16:00</p>
+            <p style={{ color: 'var(--color-primary)' }}>o godzinie 15:00</p>
         </section>
     );
 };
