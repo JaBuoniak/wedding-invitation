@@ -1,10 +1,11 @@
 import Header from './components/Header';
 import InvitationContent from './components/InvitationContent';
 import LocationMap from './components/LocationMap';
-import AddToCalendar from './components/AddToCalendar';
 import RsvpForm from './components/RsvpForm';
+import AccommodationDetails from './components/AccommodationDetails';
 
 function App() {
+
   return (
     <div className="container">
       <Header />
@@ -15,10 +16,15 @@ function App() {
           with="Lilią i Malwiną"
         />
         <LocationMap />
-        <AddToCalendar />
-        <RsvpForm />
+        <AccommodationDetails />
+        <RsvpForm
+          guestName="Anna Nowak"
+          maxAdults={2}
+          maxChildren={2}
+          maxUnder10={1}
+        />
       </main>
-      <footer className="section" style={{ fontSize: '0.9rem', color: 'var(--color-text-light)' }}>
+      <footer className="section text-sm text-muted">
         <p>&copy; 2025 Anna & Paweł</p>
       </footer>
     </div>

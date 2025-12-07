@@ -28,7 +28,6 @@ const Header = () => {
                     <p style={{
                         margin: 0,
                         fontSize: '1.2rem',
-                        fontStyle: 'italic',
                         color: 'var(--color-primary)',
                         textTransform: 'uppercase',
                         letterSpacing: '1px'
@@ -46,7 +45,6 @@ const Header = () => {
                     <p style={{
                         margin: 0,
                         fontSize: '1.2rem',
-                        fontStyle: 'italic',
                         color: 'var(--color-primary)',
                         textTransform: 'uppercase',
                         letterSpacing: '1px'

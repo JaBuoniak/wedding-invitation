@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Anna i Pawel//Wedding Invitation//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+SUMMARY:Ślub Ani i Pawła
+DTSTART:20260613T130000Z
+DTEND:20260614T020000Z
+DTSTAMP:20251207T000000Z
+UID:wedding-2026-anna-pawel@invitation
+LOCATION:Kościół św. Kazimierza Królewicza, Giżycko
+DESCRIPTION:Wesele i nocleg: Ośrodek wypoczynkowy "Piękny Brzeg" nad Jeziorem Święcajty. Węgorzewo, ul. Leśna 18.\nZapraszamy na nasz ślub!
+STATUS:CONFIRMED
+SEQUENCE:0
+BEGIN:VALARM
+TRIGGER:-PT24H
+DESCRIPTION:Przypomnienie o ślubie Ani i Pawła
+ACTION:DISPLAY
+END:VALARM
+END:VEVENT
+END:VCALENDAR
