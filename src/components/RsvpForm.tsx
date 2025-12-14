@@ -15,10 +15,11 @@ interface RsvpFormProps {
     maxAdults?: number;
     maxChildren?: number;
     maxUnder10?: number;
+    maxUnder2?: number;
     link?: string;
 }
 
-const RsvpForm = ({ maxAdults = 2, maxChildren = 0, maxUnder10 = 0, link = window.location.href }: RsvpFormProps) => {
+const RsvpForm = ({ maxAdults = 2, maxChildren = 0, maxUnder10 = 0, maxUnder2 = 0, link = window.location.href }: RsvpFormProps) => {
     const [submitted, setSubmitted] = useState(false);
     const [declined, setDeclined] = useState(false);
     const [showDeclineModal, setShowDeclineModal] = useState(false);
@@ -30,6 +31,7 @@ const RsvpForm = ({ maxAdults = 2, maxChildren = 0, maxUnder10 = 0, link = windo
         adults: maxAdults,
         children: maxChildren,
         under10: maxUnder10,
+        under2: maxUnder2,
         accommodation: {
             friSat: false,
             satSun: false,
@@ -38,7 +40,7 @@ const RsvpForm = ({ maxAdults = 2, maxChildren = 0, maxUnder10 = 0, link = windo
         message: '',
     });
 
-    const updateCount = (field: 'adults' | 'children' | 'under10', delta: number, max: number) => {
+    const updateCount = (field: 'adults' | 'children' | 'under10' | 'under2', delta: number, max: number) => {
         setFormState(prev => {
             const newValue = prev[field] + delta;
             if (newValue < 0 || newValue > max) return prev;
@@ -81,6 +83,7 @@ const RsvpForm = ({ maxAdults = 2, maxChildren = 0, maxUnder10 = 0, link = windo
             adults: 0,
             children: 0,
             under10: 0,
+            under2: 0,
             accommodation: {
                 friSat: false,
                 satSun: false,
@@ -130,12 +133,14 @@ const RsvpForm = ({ maxAdults = 2, maxChildren = 0, maxUnder10 = 0, link = windo
                     counts={{
                         adults: formState.adults,
                         children: formState.children,
-                        under10: formState.under10
+                        under10: formState.under10,
+                        under2: formState.under2
                     }}
                     limits={{
                         maxAdults,
                         maxChildren,
-                        maxUnder10
+                        maxUnder10,
+                        maxUnder2
                     }}
                     onUpdate={updateCount}
                 />

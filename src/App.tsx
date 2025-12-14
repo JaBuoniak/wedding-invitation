@@ -29,6 +29,7 @@ function App() {
           maxAdults={2}
           maxChildren={2}
           maxUnder10={1}
+          maxUnder2={1}
         />
       </main>
 

@@ -3,21 +3,24 @@ interface GuestCountSectionProps {
         adults: number;
         children: number;
         under10: number;
+        under2: number;
     };
     limits: {
         maxAdults: number;
         maxChildren: number;
         maxUnder10: number;
+        maxUnder2: number;
     };
-    onUpdate: (field: 'adults' | 'children' | 'under10', delta: number, max: number) => void;
+    onUpdate: (field: 'adults' | 'children' | 'under10' | 'under2', delta: number, max: number) => void;
 }
 
 const GuestCountSection = ({ counts, limits, onUpdate }: GuestCountSectionProps) => {
     const items = [
         { label: 'Dorośli', key: 'adults' as const, max: limits.maxAdults },
         limits.maxChildren > 0 && { label: 'Dzieci (pow. 10 lat)', key: 'children' as const, max: limits.maxChildren },
-        limits.maxUnder10 > 0 && { label: 'Dzieci (do 10 lat)', key: 'under10' as const, max: limits.maxUnder10 }
-    ].filter(Boolean) as { label: string; key: 'adults' | 'children' | 'under10'; max: number }[];
+        limits.maxUnder10 > 0 && { label: 'Dzieci (2-10 lat)', key: 'under10' as const, max: limits.maxUnder10 },
+        limits.maxUnder2 > 0 && { label: 'Dzieci (do 2 lat)', key: 'under2' as const, max: limits.maxUnder2 }
+    ].filter(Boolean) as { label: string; key: 'adults' | 'children' | 'under10' | 'under2'; max: number }[];
 
     return (
         <div className="form-group">
