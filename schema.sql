@@ -11,8 +11,8 @@ CREATE TABLE invitations (
   -- Limity
   max_adults INTEGER DEFAULT 2,
   max_children INTEGER DEFAULT 0,
-  max_under_10 INTEGER DEFAULT 0,
-  max_under_2 INTEGER DEFAULT 0
+  max_under10 INTEGER DEFAULT 0,
+  max_under2 INTEGER DEFAULT 0
 );
 
 -- TABELA 2: Odpowiedzi RSVP
@@ -48,12 +48,12 @@ CREATE TABLE rsvps (
 CREATE OR REPLACE FUNCTION set_rsvp_version()
 RETURNS TRIGGER AS $$
 BEGIN
-  -- Ustawia wersję na MAX dla danego sluga
-  -- Jeśli brak rekordów, COALESCE zwróci 0
+  -- Ustawia wersję na MAX + 1 dla danego sluga
+  -- Jeśli brak rekordów, COALESCE zwróci 0, więc 0 + 1 = 1
   NEW.version := COALESCE(
     (SELECT MAX(version) FROM rsvps WHERE slug = NEW.slug), 
     0
-  );
+  ) + 1;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;

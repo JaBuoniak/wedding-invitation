@@ -1,4 +1,5 @@
 import { useState, useRef, type FormEvent } from 'react';
+import { supabase } from '../supabaseClient';
 /* Components */
 import ContactSection from './rsvp/ContactSection';
 import GuestCountSection from './rsvp/GuestCountSection';
@@ -11,7 +12,7 @@ import DeadlineReminder from './rsvp/DeadlineReminder';
 import UsefulInfoSection from './rsvp/UsefulInfoSection';
 
 interface RsvpFormProps {
-    guestName?: string;
+    slug: string;
     maxAdults?: number;
     maxChildren?: number;
     maxUnder10?: number;
@@ -19,10 +20,11 @@ interface RsvpFormProps {
     link?: string;
 }
 
-const RsvpForm = ({ maxAdults = 2, maxChildren = 0, maxUnder10 = 0, maxUnder2 = 0, link = window.location.href }: RsvpFormProps) => {
+const RsvpForm = ({ slug, maxAdults = 2, maxChildren = 0, maxUnder10 = 0, maxUnder2 = 0, link = window.location.href }: RsvpFormProps) => {
     const [submitted, setSubmitted] = useState(false);
     const [declined, setDeclined] = useState(false);
     const [showDeclineModal, setShowDeclineModal] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const formRef = useRef<HTMLFormElement>(null);
 
     const [formState, setFormState] = useState({
@@ -58,12 +60,32 @@ const RsvpForm = ({ maxAdults = 2, maxChildren = 0, maxUnder10 = 0, maxUnder2 = 
         }));
     };
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        // Simulate API call
-        setTimeout(() => {
+        setIsSubmitting(true);
+
+        const { error } = await supabase.from('rsvps').insert({
+            slug: slug,
+            email: formState.email,
+            phone: formState.phone,
+            adults: formState.adults,
+            children: formState.children,
+            under10: formState.under10,
+            under2: formState.under2,
+            frisat: formState.accommodation.friSat,
+            satsun: formState.accommodation.satSun,
+            sunmon: formState.accommodation.sunMon,
+            message: formState.message,
+            is_declined: false
+        });
+
+        if (error) {
+            console.error('Error submitting RSVP:', error);
+            alert('Wystąpił błąd podczas wysyłania zgłoszenia. Spróbuj ponownie.');
+        } else {
             setSubmitted(true);
-        }, 1000);
+        }
+        setIsSubmitting(false);
     };
 
     const handleDeclineClick = () => {
@@ -74,28 +96,46 @@ const RsvpForm = ({ maxAdults = 2, maxChildren = 0, maxUnder10 = 0, maxUnder2 = 
         setShowDeclineModal(true);
     };
 
-    const handleConfirmDecline = () => {
+    const handleConfirmDecline = async () => {
+        setIsSubmitting(true);
         // Phone is already validated before opening modal
 
-        // Set guests to 0 and all accommodation to false
-        setFormState(prev => ({
-            ...prev,
+        const { error } = await supabase.from('rsvps').insert({
+            slug: slug,
+            email: formState.email, // Save email if provided
+            phone: formState.phone, // Save phone if provided
             adults: 0,
             children: 0,
             under10: 0,
             under2: 0,
-            accommodation: {
-                friSat: false,
-                satSun: false,
-                sunMon: false,
-            }
-        }));
+            frisat: false,
+            satsun: false,
+            sunmon: false,
+            is_declined: true
+        });
 
-        setTimeout(() => {
+        if (error) {
+            console.error('Error submitting decline:', error);
+            alert('Wystąpił błąd podczas wysyłania zgłoszenia. Spróbuj ponownie.');
+        } else {
+            // Set local state to reflect decline (reset counts visually only, though backend has 0s)
+            setFormState(prev => ({
+                ...prev,
+                adults: 0,
+                children: 0,
+                under10: 0,
+                under2: 0,
+                accommodation: {
+                    friSat: false,
+                    satSun: false,
+                    sunMon: false,
+                }
+            }));
             setSubmitted(true);
             setDeclined(true);
             setShowDeclineModal(false);
-        }, 500);
+        }
+        setIsSubmitting(false);
     };
 
     // Success / Declined View
@@ -157,11 +197,19 @@ const RsvpForm = ({ maxAdults = 2, maxChildren = 0, maxUnder10 = 0, maxUnder2 = 
 
                 {/* Actions */}
                 <div className="d-flex flex-col gap-2">
-                    <button type="submit" className="btn w-full">Potwierdzam obecność</button>
+                    <button
+                        type="submit"
+                        className="btn w-full"
+                        disabled={isSubmitting}
+                        style={{ opacity: isSubmitting ? 0.7 : 1 }}
+                    >
+                        {isSubmitting ? 'Wysyłanie...' : 'Potwierdzam obecność'}
+                    </button>
                     <button
                         type="button"
                         onClick={handleDeclineClick}
                         className="btn-text"
+                        disabled={isSubmitting}
                     >
                         Niestety nie, nie będzie mnie
                     </button>
