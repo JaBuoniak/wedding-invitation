@@ -1,5 +1,7 @@
 import { Calendar } from 'lucide-react';
 
+import seagull from '../../assets/images/seagull.png';
+
 interface DeadlineReminderProps {
     link: string;
 }
@@ -10,7 +12,8 @@ const DeadlineReminder = ({ link }: DeadlineReminderProps) => {
             <h2>Potwierdzenie przybycia</h2>
             <p className="mb-3">Prosimy o potwierdzenie do 1 marca 2026 roku</p>
 
-            <div className="mb-3" style={{ marginTop: '-1rem' }}>
+            <div className="mb-3 d-flex items-center justify-center gap-2" style={{ marginTop: '-1rem' }}>
+                <img src={seagull} alt="" style={{ height: 'auto', width: '20%', position: 'absolute', left: 10 }} />
                 <a
                     href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=Potwierdzenie+obecności+na+ślubie+Ani+i+Pawła&dates=20260301T090000Z/20260301T100000Z&details=${encodeURIComponent(`Ostateczny termin potwierdzenia przybycia!\nLink do zaproszenia: ${link}`)}`}
                     target="_blank"
