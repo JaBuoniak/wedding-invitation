@@ -1,8 +1,13 @@
 
+import SeagullDecoration from './decorations/SeagullDecoration';
+
 const AccommodationDetails = () => {
     return (
         <section className="section">
-            <h2>Noclegi</h2>
+            <div className="d-flex items-center justify-center gap-2" style={{ position: 'relative' }}>
+                <h2>Noclegi</h2>
+                <SeagullDecoration variant="sitting2" width="20%" style={{ position: 'absolute', right: '5%', top: '-10px' }} />
+            </div>
             <p className="mb-1">
                 Po weselu <u>zapewniamy nocleg</u> w <a href='https://pieknybrzeg.pl/domki-letniskowe-2/' target="_blank" rel="noopener noreferrer">przytulnych domkach</a> na terenie ośrodka.
             </p>

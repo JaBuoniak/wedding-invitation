@@ -1,10 +1,14 @@
 import { MapPin } from 'lucide-react';
+import SeagullDecoration from './decorations/SeagullDecoration';
 
 const LocationMap = () => {
     return (
         <section className="section">
-            <h2>Lokalizacja</h2>
-            
+            <div className="d-flex items-center justify-center gap-2" style={{ position: 'relative' }}>
+                <SeagullDecoration variant="buoy1" width="20%" style={{ position: 'absolute', left: '5%', top: '-10px' }}/>
+                <h2>Lokalizacja</h2>
+            </div>
+
             <div className="mb-3">
                 <div className="d-flex items-center justify-center mb-05 text-primary">
                     <MapPin size={24} style={{ marginRight: '0.5rem' }} />

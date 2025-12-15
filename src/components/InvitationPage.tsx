@@ -8,6 +8,9 @@ import RsvpForm from './RsvpForm';
 import AccommodationDetails from './AccommodationDetails';
 import WaveDecoration from './decorations/WaveDecoration';
 import YachtDecoration from './decorations/YachtDecoration';
+import SeagullDecoration from './decorations/SeagullDecoration';
+
+import HomePage from './HomePage';
 
 // Typy zgodne z bazą danych
 type Invitation = {
@@ -56,8 +59,8 @@ const InvitationPage = () => {
     if (loading) {
         return (
             <div className="d-flex flex-col items-center justify-center" style={{ minHeight: '100vh', opacity: 0.8 }}>
-                <div style={{ animation: 'pulse 2s infinite ease-in-out' }}>
-                    <YachtDecoration />
+                <div className="d-flex justify-center" style={{ animation: 'pulse 2s infinite ease-in-out', width: '100%' }}>
+                    <SeagullDecoration variant='buoy1' width='150px' />
                 </div>
                 <p className="text-muted mt-1 text-sm">Wczytywanie...</p>
             </div>
@@ -65,13 +68,7 @@ const InvitationPage = () => {
     }
 
     if (error || !invitation) {
-        return (
-            <div className="container text-center p-4" style={{ marginTop: '2rem' }}>
-                <h2 className="text-primary mb-2">Ups!</h2>
-                <p>{error || 'Wystąpił nieoczekiwany błąd.'}</p>
-                <p className="text-muted text-sm mt-2">Sprawdź czy adres strony jest poprawny.</p>
-            </div>
-        );
+        return <HomePage />;
     }
 
     return (
@@ -107,7 +104,7 @@ const InvitationPage = () => {
             <footer className="text-center text-sm text-muted">
                 <div className="mb-3">
                     <YachtDecoration />
-                    <p>&copy; 2025 Anna & Paweł</p>
+                    <p>&copy; {new Date().getFullYear()} Ania & Paweł</p>
                 </div>
             </footer>
         </div>

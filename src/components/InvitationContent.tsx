@@ -1,3 +1,5 @@
+import SeagullDecoration from "./decorations/SeagullDecoration";
+
 type GuestProps = {
     who: string;
     and?: string | null;
@@ -18,7 +20,13 @@ const InvitationContent = ({ who, and, with: withChildren }: GuestProps = defaul
                 z radością zapraszają
             </p>
 
-            <div className="mt-2 mb-2 text-serif text-2xl">
+            <div className="mt-2 mb-2 text-center text-serif text-2xl" style={{ position: 'relative' }}>
+                <SeagullDecoration
+                    variant="sitting1"
+                    width="60px"
+                    style={{ position: 'absolute', right: '10px', top: '-50px' }}
+                    flip
+                />
                 <p className="text-lg mt-05">Sz.P. </p>
 
                 <p>{who}</p>
