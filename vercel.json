@@ -1,4 +1,16 @@
 {
+    "redirects": [
+        {
+            "source": "/db",
+            "destination": "https://supabase.com/dashboard/project/cxkpmlzupozygnxyosiw",
+            "permanent": true
+        },
+        {
+            "source": "/git",
+            "destination": "https://github.com/JaBuoniak/wedding-invitation",
+            "permanent": true
+        }
+    ],
     "rewrites": [
         {
             "source": "/(.*)",
