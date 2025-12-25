@@ -56,7 +56,7 @@ BEGIN
   ) + 1;
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 
 -- TRIGGER: Uruchamianie funkcji przed każdym INSERT
 CREATE TRIGGER trigger_set_rsvp_version
