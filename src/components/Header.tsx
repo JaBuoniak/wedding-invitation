@@ -24,10 +24,10 @@ const Header = () => {
             }}>
                 {/* Left Column */}
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                    <h1 style={{ margin: 0, fontSize: '3.5rem', lineHeight: '1.2' }}>Ania</h1>
+                    <h1 style={{ margin: 0, fontSize: 'clamp(1.8rem, 10vw, 3.5rem)', lineHeight: '1.2' }}>Ania</h1>
                     <p style={{
                         margin: 0,
-                        fontSize: '1.2rem',
+                        fontSize: 'clamp(0.7rem, 4vw, 1.2rem)',
                         color: 'var(--color-primary)',
                         textTransform: 'uppercase',
                         letterSpacing: '1px'
@@ -35,16 +35,16 @@ const Header = () => {
                 </div>
 
                 {/* Middle Column */}
-                <div style={{ fontSize: '3.5rem', fontFamily: 'var(--font-serif)', color: 'var(--color-primary)' }}>
+                <div style={{ fontSize: 'clamp(1.8rem, 10vw, 3.5rem)', fontFamily: 'var(--font-serif)', color: 'var(--color-primary)' }}>
                     &
                 </div>
 
                 {/* Right Column */}
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                    <h1 style={{ margin: 0, fontSize: '3.5rem', lineHeight: '1.2' }}>Paweł</h1>
+                    <h1 style={{ margin: 0, fontSize: 'clamp(1.8rem, 10vw, 3.5rem)', lineHeight: '1.2' }}>Paweł</h1>
                     <p style={{
                         margin: 0,
-                        fontSize: '1.2rem',
+                        fontSize: 'clamp(0.7rem, 4vw, 1.2rem)',
                         color: 'var(--color-primary)',
                         textTransform: 'uppercase',
                         letterSpacing: '1px'
