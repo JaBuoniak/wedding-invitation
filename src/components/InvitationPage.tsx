@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { trackVisit } from '../utils/visitTracker';
 import Header from './Header';
 import InvitationContent from './InvitationContent';
 import LocationMap from './LocationMap';
@@ -9,6 +10,7 @@ import AccommodationDetails from './AccommodationDetails';
 import WaveDecoration from './decorations/WaveDecoration';
 import YachtDecoration from './decorations/YachtDecoration';
 import SeagullDecoration from './decorations/SeagullDecoration';
+
 
 import HomePage from './HomePage';
 
@@ -47,8 +49,12 @@ const InvitationPage = () => {
             if (error) {
                 console.error('Error fetching invitation:', error);
                 setError('Nie znaleziono zaproszenia o podanym kodzie.');
+                // Track unknown visit
+                trackVisit(slug, false);
             } else {
                 setInvitation(data);
+                // Track valid visit
+                trackVisit(slug, true);
             }
             setLoading(false);
         };

@@ -77,7 +77,45 @@ ON rsvps FOR INSERT
 WITH CHECK (true);
 
 -- Przykładowe dane
-INSERT INTO invitations (slug, guest_who, guest_and, guest_with, max_adults, max_children, max_under_10, max_under_2)
+INSERT INTO invitations (slug, guest_who, guest_and, guest_with, max_adults, max_children, max_under10, max_under2)
 VALUES 
 ('pj', 'Pawła Jabłońskiego', 'Annę Imbiorkiewicz', NULL, 2, 0, 0, 0),
 ('nowaki', 'Rodzinę Nowaków', NULL, 'dziećmi', 2, 0, 2, 1);
+
+-- TABELA 3: Logi odwiedzin
+CREATE TABLE visits (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  slug TEXT REFERENCES invitations(slug) NOT NULL,
+  user_agent TEXT,
+  screen_resolution TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- TABELA 4: Logi nieznanych prób wejścia
+CREATE TABLE unknown_visits (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  slug TEXT NOT NULL,
+  user_agent TEXT,
+  screen_resolution TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- BEZPIECZEŃSTWO
+ALTER TABLE visits ENABLE ROW LEVEL SECURITY;
+ALTER TABLE unknown_visits ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Każdy może dodać log wizyty" 
+ON visits FOR INSERT 
+WITH CHECK (true);
+
+CREATE POLICY "Każdy może dodać log nieznanej wizyty" 
+ON unknown_visits FOR INSERT 
+WITH CHECK (true);
+
+CREATE POLICY "Każdy może odczytać logi" 
+ON visits FOR SELECT 
+USING (true);
+
+CREATE POLICY "Każdy może odczytać nieznane logi" 
+ON unknown_visits FOR SELECT 
+USING (true);

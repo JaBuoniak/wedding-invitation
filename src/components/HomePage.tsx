@@ -1,6 +1,12 @@
+import { useEffect } from 'react';
 import SeagullDecoration from './decorations/SeagullDecoration';
+import { trackVisit } from '../utils/visitTracker';
 
 const HomePage = () => {
+    useEffect(() => {
+        trackVisit('(homepage)', false);
+    }, []);
+
     return (
         <div className="container text-center p-4 d-flex flex-col items-center justify-center" style={{ minHeight: '80vh' }}>
             <div className="mb-3 d-flex justify-center" style={{ width: '100%' }}>
