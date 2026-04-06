@@ -119,3 +119,21 @@ USING (true);
 CREATE POLICY "Każdy może odczytać nieznane logi" 
 ON unknown_visits FOR SELECT 
 USING (true);
+
+-- TABELA 5: Odpowiedzi quizu
+CREATE TABLE quiz_answers (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  question_id TEXT NOT NULL,
+  answer TEXT NOT NULL, -- 'ania' lub 'pawel'
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+ALTER TABLE quiz_answers ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Każdy może odpowiedzieć na quiz"
+ON quiz_answers FOR INSERT
+WITH CHECK (true);
+
+CREATE POLICY "Każdy może odczytać statystyki quizu"
+ON quiz_answers FOR SELECT
+USING (true);
