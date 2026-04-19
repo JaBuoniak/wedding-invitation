@@ -61,32 +61,34 @@ const SeatSearchSection = () => {
         </h2>
       </div>
 
-      <div className="info-seat-search__input-wrapper">
-        <input
-          type="text"
-          className="info-seat-search__input"
-          placeholder="Podaj imię lub nazwisko..."
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-            setSelectedGuest(null);
-          }}
-        />
-      </div>
-
-      {search.length >= 2 && filteredGuests.length > 0 && !selectedGuest && (
-        <div className="info-seat-search__results">
-          {filteredGuests.map((guest) => (
-            <button
-              key={guest.id}
-              className="info-seat-search__result-item"
-              onClick={() => handleSelect(guest)}
-            >
-              {guest.name}
-            </button>
-          ))}
+      <div className="info-seat-search__search-container">
+        <div className="info-seat-search__input-wrapper">
+          <input
+            type="text"
+            className="info-seat-search__input"
+            placeholder="Podaj imię lub nazwisko..."
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setSelectedGuest(null);
+            }}
+          />
         </div>
-      )}
+
+        {search.length >= 2 && filteredGuests.length > 0 && !selectedGuest && (
+          <div className="info-seat-search__results">
+            {filteredGuests.map((guest) => (
+              <button
+                key={guest.id}
+                className="info-seat-search__result-item"
+                onClick={() => handleSelect(guest)}
+              >
+                {guest.name}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
 
       {search.length >= 2 && filteredGuests.length === 0 && !selectedGuest && (
         <div className="info-seat-search__no-results">

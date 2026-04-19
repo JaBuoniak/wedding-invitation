@@ -607,6 +607,10 @@
   color: var(--color-text-light);
 }
 
+.info-seat-search__search-container {
+  position: relative;
+}
+
 .info-seat-search__input-wrapper {
   position: relative;
   display: flex;
@@ -647,7 +651,8 @@
   border: 1px solid var(--color-border);
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   position: absolute;
-  width: calc(100% - 3rem);
+  width: 100%;
+  left: 0;
   z-index: 10;
 }
 
