@@ -1,12 +1,11 @@
-// TODO: Podmień href na właściwy link do galerii celebrio.app
-const GALLERY_URL = 'https://celebrio.app';
+const GALLERY_URL = 'https://aniaipawel.celebrio.app/gallery/vdrydjiu';
 
 const FooterGallerySection = () => {
   return (
     <section className="info-footer-gallery">
       <h2 className="info-footer-gallery__title">Twoje zdjęcia są ważne</h2>
       <p className="info-footer-gallery__desc">
-        Każde zdjęcie i film trafią do wspólnej galerii — pamiątka dla nas wszystkich.
+        Każde zdjęcie i film trafią do wspólnej galerii i będą pamiątką dla nas wszystkich.
       </p>
       <a
         id="btn-add-photos-footer"

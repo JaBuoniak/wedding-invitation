@@ -74,14 +74,19 @@
   font-size: 0.9rem;
   color: var(--color-text-light);
   margin-top: 0.75rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   letter-spacing: 0.5px;
 }
 
-.info-welcome__actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+.info-welcome__message {
+  font-size: 1rem;
+  color: var(--color-text);
+  line-height: 1.65;
+  max-width: 280px;
+  margin: 0 auto 0.5rem;
+  font-style: italic;
+  opacity: 0.85;
+  white-space: pre-wrap;
 }
 
 .info-btn {
@@ -182,6 +187,7 @@
   opacity: 0.85;
   margin-bottom: 1.5rem;
   line-height: 1.5;
+  white-space: pre-wrap;
 }
 
 .info-gallery__btn {
@@ -540,6 +546,29 @@
   font-size: 0.9rem;
   color: var(--color-text-light);
   margin-bottom: 1.25rem;
+}
+
+/* ===== THANK YOU ===== */
+
+.info-thankyou {
+  padding: 0 0 0.5rem;
+  text-align: center;
+}
+
+.info-thankyou__text {
+  font-size: 0.95rem;
+  color: var(--color-text);
+  line-height: 1.7;
+  max-width: 300px;
+  margin: 0 auto 0.75rem;
+  white-space: pre-wrap;
+}
+
+.info-thankyou__text--secondary {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  font-style: italic;
+  margin-bottom: 1.5rem;
 }
 
 /* ===== DIVIDER ===== */

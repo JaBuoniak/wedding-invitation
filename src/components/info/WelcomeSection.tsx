@@ -1,13 +1,17 @@
 import imageHeader from '../../assets/photo/header/07.jpg';
-
-// TODO: Podmień href na właściwy link do galerii celebrio.app
-const GALLERY_URL = 'https://celebrio.app';
+import type { WeddingPhase } from './weddingPhase';
 
 interface WelcomeSectionProps {
-  onScrollToPlan: () => void;
+  phase: WeddingPhase;
 }
 
-const WelcomeSection = ({ onScrollToPlan }: WelcomeSectionProps) => {
+const WELCOME_MESSAGE: Record<WeddingPhase, string> = {
+  before: 'Kochani, nie możemy się już doczekać!\nPoniżej garść informacji organizacyjnych.',
+  during: 'Cieszymy się, że jesteście!\nŻyczymy Wam szampańskiej zabawy.\nSprawdźcie, co dla Was przygotowaliśmy.',
+  after: 'Dziękujemy za Waszą obecność!\nMamy nadzieję, że dobrze się bawiliście\ni będziecie miło wspominać ten dzień.',
+};
+
+const WelcomeSection = ({ phase }: WelcomeSectionProps) => {
   return (
     <section className="info-welcome">
       <img
@@ -19,38 +23,18 @@ const WelcomeSection = ({ onScrollToPlan }: WelcomeSectionProps) => {
       <div className="info-welcome__names">
         <div className="info-welcome__name-col info-welcome__name-col--left">
           <span className="info-welcome__first-name">Ania</span>
-          <span className="info-welcome__last-name">Imbiorkiewicz</span>
         </div>
 
         <span className="info-welcome__ampersand">&amp;</span>
 
         <div className="info-welcome__name-col info-welcome__name-col--right">
           <span className="info-welcome__first-name">Paweł</span>
-          <span className="info-welcome__last-name">Jabłoński</span>
         </div>
       </div>
 
-      <p className="info-welcome__subtitle">13 czerwca 2026 &nbsp;·&nbsp; Giżycko</p>
+      <p className="info-welcome__subtitle"></p>
 
-      <div className="info-welcome__actions">
-        <button
-          id="btn-see-plan"
-          className="info-btn info-btn--outline"
-          onClick={onScrollToPlan}
-        >
-          Plan dnia
-        </button>
-
-        <a
-          id="btn-add-photos-hero"
-          href={GALLERY_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="info-btn info-btn--primary"
-        >
-          Dodaj zdjęcia i filmy
-        </a>
-      </div>
+      <p className="info-welcome__message">{WELCOME_MESSAGE[phase]}</p>
     </section>
   );
 };

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Clock, Navigation, Home, HelpCircle, Phone, Star } from 'lucide-react';
 import './info.css';
 
@@ -13,7 +13,6 @@ import StaySection from './StaySection';
 import QuizSection from './QuizSection';
 import ContactSection from './ContactSection';
 import FooterGallerySection from './FooterGallerySection';
-import ThankYouSection from './ThankYouSection';
 
 type SectionId =
   | 'plan'
@@ -26,119 +25,109 @@ type SectionId =
 const InfoPage = () => {
   const phase = getWeddingPhase();
   const [openSection, setOpenSection] = useState<SectionId | null>(null);
-  const accordionRef = useRef<HTMLDivElement>(null);
-
-  // After wedding — show thank you page
-  if (phase === 'after') {
-    return <ThankYouSection />;
-  }
 
   const handleToggle = (id: string) => {
     setOpenSection((prev) => (prev === id ? null : (id as SectionId)));
   };
 
-  const handleScrollToPlan = () => {
-    setOpenSection('plan');
-    setTimeout(() => {
-      accordionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 50);
-  };
-
   return (
     <div className="info-page">
-      <WelcomeSection onScrollToPlan={handleScrollToPlan} />
+      <WelcomeSection phase={phase} />
 
       <div style={{ height: '1.5rem' }} />
 
-      <GallerySection />
+      <GallerySection phase={phase} />
 
       <div style={{ height: '1.5rem' }} />
 
-      <div className="info-accordion" ref={accordionRef}>
+      {/* ===== BEFORE & DURING — accordion ===== */}
+      {phase !== 'after' && (
+        <div className="info-accordion">
 
-        {/* ===== BEFORE WEDDING ===== */}
-        {phase === 'before' && (
-          <>
-            <AccordionSection
-              id="travel"
-              title="Dojazd"
-              Icon={Navigation}
-              isOpen={openSection === 'travel'}
-              onToggle={handleToggle}
-            >
-              <TravelSection />
-            </AccordionSection>
+          {/* ===== BEFORE WEDDING ===== */}
+          {phase === 'before' && (
+            <>
+              <AccordionSection
+                id="travel"
+                title="Dojazd"
+                Icon={Navigation}
+                isOpen={openSection === 'travel'}
+                onToggle={handleToggle}
+              >
+                <TravelSection />
+              </AccordionSection>
 
-            <AccordionSection
-              id="stay"
-              title="Noclegi"
-              Icon={Home}
-              isOpen={openSection === 'stay'}
-              onToggle={handleToggle}
-            >
-              <StaySection />
-            </AccordionSection>
+              <AccordionSection
+                id="stay"
+                title="Noclegi"
+                Icon={Home}
+                isOpen={openSection === 'stay'}
+                onToggle={handleToggle}
+              >
+                <StaySection />
+              </AccordionSection>
 
-            <AccordionSection
-              id="contact"
-              title="Kontakt"
-              Icon={Phone}
-              isOpen={openSection === 'contact'}
-              onToggle={handleToggle}
-            >
-              <ContactSection phase={phase} />
-            </AccordionSection>
-          </>
-        )}
+              <AccordionSection
+                id="contact"
+                title="Kontakt"
+                Icon={Phone}
+                isOpen={openSection === 'contact'}
+                onToggle={handleToggle}
+              >
+                <ContactSection phase={phase} />
+              </AccordionSection>
+            </>
+          )}
 
-        {/* ===== DURING WEDDING ===== */}
-        {phase === 'during' && (
-          <>
-            <AccordionSection
-              id="plan"
-              title="Plan dnia"
-              Icon={Clock}
-              isOpen={openSection === 'plan'}
-              onToggle={handleToggle}
-            >
-              <DayPlanSection />
-            </AccordionSection>
+          {/* ===== DURING WEDDING ===== */}
+          {phase === 'during' && (
+            <>
+              <AccordionSection
+                id="plan"
+                title="Plan dnia"
+                Icon={Clock}
+                isOpen={openSection === 'plan'}
+                onToggle={handleToggle}
+              >
+                <DayPlanSection />
+              </AccordionSection>
 
-            <AccordionSection
-              id="attractions"
-              title="Atrakcje"
-              Icon={Star}
-              isOpen={openSection === 'attractions'}
-              onToggle={handleToggle}
-            >
-              <AttractionsSection />
-            </AccordionSection>
+              <AccordionSection
+                id="attractions"
+                title="Atrakcje"
+                Icon={Star}
+                isOpen={openSection === 'attractions'}
+                onToggle={handleToggle}
+              >
+                <AttractionsSection />
+              </AccordionSection>
 
-            <AccordionSection
-              id="quiz"
-              title="Quiz"
-              Icon={HelpCircle}
-              isOpen={openSection === 'quiz'}
-              onToggle={handleToggle}
-            >
-              <QuizSection />
-            </AccordionSection>
+              <AccordionSection
+                id="quiz"
+                title="Quiz"
+                Icon={HelpCircle}
+                isOpen={openSection === 'quiz'}
+                onToggle={handleToggle}
+              >
+                <QuizSection />
+              </AccordionSection>
 
-            <AccordionSection
-              id="contact"
-              title="Kontakt"
-              Icon={Phone}
-              isOpen={openSection === 'contact'}
-              onToggle={handleToggle}
-            >
-              <ContactSection phase={phase} />
-            </AccordionSection>
-          </>
-        )}
+              <AccordionSection
+                id="contact"
+                title="Kontakt"
+                Icon={Phone}
+                isOpen={openSection === 'contact'}
+                onToggle={handleToggle}
+              >
+                <ContactSection phase={phase} />
+              </AccordionSection>
+            </>
+          )}
 
-      </div>
+        </div>
+      )}
 
-      {/* Gallery repeat — always show during phase, show only first item before */}
+      {/* Footer gallery — only during */}
       {phase === 'during' && (
         <>
           <div style={{ height: '0.5rem' }} />
@@ -146,11 +135,24 @@ const InfoPage = () => {
         </>
       )}
 
-      {phase === 'before' && (
-        <div style={{ padding: '2rem 1.5rem', textAlign: 'center' }}>
-          <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)' }}>
-            Galeria zdjęć i filmów z wesela będzie dostępna 13 czerwca.
-          </p>
+      {/* ===== AFTER WEDDING ===== */}
+      {phase === 'after' && (
+        <div className="info-accordion">
+          <section className="info-thankyou">
+            <p className="info-thankyou__text info-thankyou__text--secondary">
+              Zdjęcia będą dostępne do oglądania już w tym tygodniu.
+            </p>
+          </section>
+
+          <AccordionSection
+            id="contact"
+            title="Kontakt"
+            Icon={Phone}
+            isOpen={openSection === 'contact'}
+            onToggle={handleToggle}
+          >
+            <ContactSection phase={phase} />
+          </AccordionSection>
         </div>
       )}
 

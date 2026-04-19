@@ -1,14 +1,26 @@
-// TODO: Podmień na właściwy link do galerii celebrio.app
-const GALLERY_URL = 'https://celebrio.app';
+import type { WeddingPhase } from './weddingPhase';
 
-const GallerySection = () => {
+const GALLERY_URL = 'https://aniaipawel.celebrio.app/gallery/vdrydjiu';
+
+const GALLERY_DESC: Record<WeddingPhase, string> = {
+  before:
+    'Utrwaleniem ślubu w kościele zajmą się profesjonaliści, ale potem liczymy na Was!\nNie oszczędzajcie aparatu!',
+  during:
+    'Zróbcie nam pamiątkę z Waszej perspektywy,\na potem wrzućcie tu zdjęcia i filmiki z wesela.',
+  after:
+    'Macie jakieś fajne ujęcia?\nKoniecznie podzielcie się z nami!',
+};
+
+interface GallerySectionProps {
+  phase: WeddingPhase;
+}
+
+const GallerySection = ({ phase }: GallerySectionProps) => {
   return (
     <section className="info-gallery" id="gallery-section">
       <p className="info-gallery__label">Wspólna galeria</p>
       <h2 className="info-gallery__title">Zdjęcia i filmy</h2>
-      <p className="info-gallery__desc">
-        Wrzucaj zdjęcia i filmiki z wesela. Zobaczymy się wszystkimi oczami.
-      </p>
+      <p className="info-gallery__desc">{GALLERY_DESC[phase]}</p>
       <a
         id="btn-open-gallery"
         href={GALLERY_URL}

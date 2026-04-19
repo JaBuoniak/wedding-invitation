@@ -4,6 +4,7 @@ export type WeddingPhase = 'before' | 'during' | 'after';
 const WEDDING_YEAR = 2026;
 const WEDDING_MONTH = 5; // 0-indexed
 const WEDDING_DAY = 13;
+const WEDDING_HOUR = 15;
 
 export const getWeddingPhase = (): WeddingPhase => {
   // Nadpisanie przez URL: ?phase=before | during | after (tylko dev/podgląd)
@@ -13,11 +14,10 @@ export const getWeddingPhase = (): WeddingPhase => {
   }
 
   const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const weddingDay = new Date(WEDDING_YEAR, WEDDING_MONTH, WEDDING_DAY);
+  const weddingDay = new Date(WEDDING_YEAR, WEDDING_MONTH, WEDDING_DAY, WEDDING_HOUR);
   const dayAfter = new Date(WEDDING_YEAR, WEDDING_MONTH, WEDDING_DAY + 2);
 
-  if (today < weddingDay) return 'before';
-  if (today < dayAfter) return 'during';
+  if (now < weddingDay) return 'before';
+  if (now < dayAfter) return 'during';
   return 'after';
 };
