@@ -5,6 +5,21 @@ const WEDDING_YEAR = 2026;
 const WEDDING_MONTH = 5; // 0-indexed
 const WEDDING_DAY = 13;
 const WEDDING_HOUR = 15;
+const SEAT_SEARCH_END_HOUR = 18;
+
+export const isSeatSearchActive = (): boolean => {
+  // 1. Sprawdzamy fazę (uwzględnia parametry URL ?phase=during)
+  const phase = getWeddingPhase();
+
+  // Wyszukiwarka dostępna tylko w fazie 'during'
+  if (phase !== 'during') {
+    return false;
+  }
+
+  // 2. Jeśli jest faza during, sprawdzamy czy nie jest po 18:00 dnia ślubu
+  const now = new Date();
+  return now < new Date(WEDDING_YEAR, WEDDING_MONTH, WEDDING_DAY, SEAT_SEARCH_END_HOUR);
+};
 
 export const getWeddingPhase = (): WeddingPhase => {
   // Nadpisanie przez URL: ?phase=before | during | after (tylko dev/podgląd)

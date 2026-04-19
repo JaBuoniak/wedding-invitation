@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { Clock, Navigation, Home, HelpCircle, Phone, Star } from 'lucide-react';
 import './info.css';
 
-import { getWeddingPhase } from './weddingPhase';
+import { getWeddingPhase, isSeatSearchActive } from './weddingPhase';
 import WelcomeSection from './WelcomeSection';
 import GallerySection from './GallerySection';
+import SeatSearchSection from './SeatSearchSection';
 import AccordionSection from './AccordionSection';
 import DayPlanSection from './DayPlanSection';
 import AttractionsSection from './AttractionsSection';
@@ -24,6 +25,7 @@ type SectionId =
 
 const InfoPage = () => {
   const phase = getWeddingPhase();
+  const showSeatSearch = isSeatSearchActive();
   const [openSection, setOpenSection] = useState<SectionId | null>(null);
 
   const handleToggle = (id: string) => {
@@ -35,6 +37,13 @@ const InfoPage = () => {
       <WelcomeSection phase={phase} />
 
       <div style={{ height: '1.5rem' }} />
+
+      {showSeatSearch && (
+        <>
+          <SeatSearchSection />
+          <div style={{ height: '1.5rem' }} />
+        </>
+      )}
 
       <GallerySection phase={phase} />
 
