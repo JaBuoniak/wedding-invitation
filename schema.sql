@@ -154,3 +154,45 @@ INSERT INTO quiz (question, option_a, option_b, correct_answer) VALUES
   ('Kto pierwszy powiedzial "kocham cie"?',              'Ania',  'Pawel', NULL),
   ('Kto bardziej sie denerwował przed pierwsza randka?', 'Ania',  'Pawel', NULL),
   ('Kto zaproponowal wspolne zamieszkanie?',             'Ania',  'Pawel', NULL);
+
+-- TABELA 6: Plan dnia
+CREATE TABLE schedule (
+  id          BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  day         INTEGER NOT NULL DEFAULT 0, -- 0: dzien slubu, 1: kolejny dzien
+  hour        INTEGER NOT NULL,
+  minute      INTEGER NOT NULL,
+  duration    INTEGER, -- Czas trwania w minutach (techniczny dla obslugi)
+  title       TEXT    NOT NULL,
+  description TEXT,
+  is_visible  BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+ALTER TABLE schedule ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Kazdy moze odczytac plan dnia"
+ON schedule FOR SELECT
+USING (true);
+
+-- Dane planu dnia
+INSERT INTO schedule (day, hour, minute, duration, title, description, is_visible) VALUES
+  (0, 8, 0, 60, 'Śniadanie', NULL, false),
+  (0, 9, 0, 90, 'Fryzura', NULL, false),
+  (0, 10, 30, 90, 'Makijaż', NULL, false),
+  (0, 12, 0, NULL, 'Szykowanie z kamera', NULL, false),
+  (0, 13, 0, NULL, 'Lunch', NULL, false),
+  (0, 13, 45, 15, 'Błogoslawienstwo rodziców', NULL, false),
+  (0, 14, 0, NULL, 'Wyjazd do Giżycka', NULL, false),
+  (0, 15, 0, 60, 'Ślub', 'Kościół pw. św. Kazimierza Królewicza', true),
+  (0, 16, 30, 20, 'Rejsik', 'Goście się rozgaszczają', false),
+  (0, 17, 00, 20, 'Powitanie gości', 'przed Tawerną Piękny Brzeg', true),
+  (0, 18, 00, NULL, 'Obiad', NULL, true),
+  (0, 17, 20, 30, 'Życzenia', 'sala taneczna albo na zewnątrz', true),
+  (0, 18, 30, NULL, 'Zdjęcia z goścmi', NULL, false),
+  (0, 19, 10, NULL, 'Pierwszy taniec', NULL, false),
+  (0, 20, 0, NULL, 'Sesja na jeziorze', NULL, false),
+  (0, 21, 0, NULL, 'Kolacja', NULL, true),
+  (0, 22, 30, NULL, 'Tort', NULL, true),
+  (1, 0, 0, NULL, 'Oczepiny', NULL, true),
+  (1, 1, 0, NULL, 'Gorący posiłek', NULL, true),
+  (1, 3, 0, NULL, 'Koniec oficjalnej imprezy', 'DJ konczy', false),
+  (1,12, 0, NULL, 'Poprawiny', 'obok tawerny', true);

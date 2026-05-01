@@ -336,10 +336,23 @@
   padding-top: 0.1rem;
 }
 
-.info-dayplan__event {
+.info-dayplan__content {
+  display: flex;
+  flex-direction: column;
+  padding-top: 0.1rem;
+}
+
+.info-dayplan__title {
   font-size: 0.95rem;
   color: var(--color-text);
-  padding-top: 0.1rem;
+  font-weight: 500;
+}
+
+.info-dayplan__description {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+  line-height: 1.4;
+  margin-top: 0.15rem;
 }
 
 /* ===== ATTRACTIONS ===== */

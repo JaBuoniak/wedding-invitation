@@ -1,21 +1,53 @@
-// TODO: Uzupełnij plan dnia właściwymi godzinami i wydarzeniami
-const DAY_PLAN = [
-  { time: '15:00', event: 'Ceremonia ślubna — Kościół św. Kazimierza Królewicza, Giżycko' },
-  { time: '17:00', event: 'Wyjazd na miejsce wesela' },
-  { time: '18:00', event: 'Powitanie gości w Tawernie Piękny Brzeg' },
-  { time: '18:30', event: 'Czas na taniec i zabawę' },
-  { time: '21:00', event: 'Tort weselny' },
-  { time: '02:00', event: 'Poprawiny — śniadanie następnego dnia' },
-];
+import { useState, useEffect } from 'react';
+import { supabase } from '../../supabaseClient';
+
+type ScheduleItem = {
+  id: number;
+  hour: number;
+  minute: number;
+  title: string;
+  description: string;
+};
 
 const DayPlanSection = () => {
+  const [items, setItems] = useState<ScheduleItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSchedule = async () => {
+      const { data, error } = await supabase
+        .from('schedule')
+        .select('*')
+        .eq('is_visible', true)
+        .order('day', { ascending: true })
+        .order('hour', { ascending: true })
+        .order('minute', { ascending: true });
+
+      if (!error && data) {
+        setItems(data);
+      }
+      setLoading(false);
+    };
+
+    fetchSchedule();
+  }, []);
+
+  if (loading) return null;
+
   return (
     <div className="info-dayplan">
-      {DAY_PLAN.map((item, index) => (
-        <div className="info-dayplan__item" key={index}>
+      {items.map((item) => (
+        <div className="info-dayplan__item" key={item.id}>
           <div className="info-dayplan__dot" />
-          <span className="info-dayplan__time">{item.time}</span>
-          <span className="info-dayplan__event">{item.event}</span>
+          <span className="info-dayplan__time">
+            {String(item.hour).padStart(2, '0')}:{String(item.minute).padStart(2, '0')}
+          </span>
+          <div className="info-dayplan__content">
+            <span className="info-dayplan__title">{item.title}</span>
+            {item.description && (
+              <span className="info-dayplan__description">{item.description}</span>
+            )}
+          </div>
         </div>
       ))}
     </div>
