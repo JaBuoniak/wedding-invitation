@@ -63,16 +63,6 @@ const InfoPage = ({ phase: propsPhase }: InfoPageProps) => {
             </AccordionSection>
 
             <AccordionSection
-              id="attractions"
-              title="Atrakcje"
-              Icon={Star}
-              isOpen={openSections.includes('attractions')}
-              onToggle={handleToggle}
-            >
-              <AttractionsSection phase={phase} />
-            </AccordionSection>
-
-            <AccordionSection
               id="contact"
               title="Kontakt"
               Icon={Phone}

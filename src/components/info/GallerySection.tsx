@@ -4,7 +4,7 @@ const GALLERY_URL = 'https://aniaipawel.celebrio.app/gallery/vdrydjiu';
 
 const GALLERY_DESC: Record<WeddingPhase, string> = {
   before:
-    'Utrwaleniem ślubu w kościele zajmą się profesjonaliści, ale potem liczymy na Was!\nNie oszczędzajcie aparatu!',
+    'Utrwaleniem ślubu w kościele\nzajmą się profesjonaliści,\nale potem nie oszczędzajcie aparatu!',
   during:
     'Upamiętnijcie ten dzień z Waszej perspektywy,\na potem wrzućcie tu zdjęcia i filmiki z wesela.',
   after:

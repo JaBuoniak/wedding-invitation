@@ -1,7 +1,7 @@
 const StaySection = () => {
   return (
     <div>
-      <div className="info-logistics__block">
+      <div className="info-logistics__block" style={{ marginBottom: '0.75rem' }}>
         <p className="info-logistics__subtitle">Zakwaterowanie</p>
         <p className="info-logistics__name">Domki w ośrodku Piękny Brzeg</p>
         {/* TODO: Uzupełnij godziny zameldowania i wymeldowania */}
@@ -10,7 +10,7 @@ const StaySection = () => {
         </p>
         <p style={{ fontSize: '0.88rem', color: 'var(--color-text-light)', marginBottom: '0.75rem' }}>
           {/* TODO: Uzupełnij wszelkie dodatkowe informacje */}
-          Prosimy o zabranie własnych ręczników.
+          Prosimy o <b>zabranie własnych ręczników</b>.
         </p>
         <a
           id="btn-accommodation-details"
@@ -31,9 +31,20 @@ const StaySection = () => {
           target="_blank"
           rel="noopener noreferrer"
           className="info-btn info-btn--ghost"
-          style={{ fontSize: '0.9rem', padding: '0.7rem 1rem' }}
+          style={{ fontSize: '0.9rem', padding: '0.7rem 1rem', marginBottom: '0.75rem' }}
         >
           Mapka ośrodka
+        </a>
+        
+        <a
+          id="btn-resort-attractions"
+          href="https://pieknybrzeg.pl/atrakcje/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="info-btn info-btn--ghost"
+          style={{ fontSize: '0.9rem', padding: '0.7rem 1rem' }}
+        >
+          Atrakcje ośrodka
         </a>
       </div>
     </div>
