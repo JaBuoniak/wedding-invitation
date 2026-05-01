@@ -25,19 +25,15 @@ const StaySection = () => {
       </div>
 
       <div className="info-logistics__block" style={{ marginBottom: 0 }}>
-        <p className="info-logistics__subtitle">Atrakcje ośrodka</p>
-        <p style={{ fontSize: '0.88rem', color: 'var(--color-text-light)', marginBottom: '0.75rem' }}>
-          Jezioro Święcajty, sprzęt wodny, plaża i wiele więcej.
-        </p>
         <a
-          id="btn-resort-attractions"
-          href="https://pieknybrzeg.pl/atrakcje/"
+          id="btn-resort-map"
+          href="https://pieknybrzeg.pl/wp-content/uploads/2025/08/mapa-www.jpg"
           target="_blank"
           rel="noopener noreferrer"
           className="info-btn info-btn--ghost"
           style={{ fontSize: '0.9rem', padding: '0.7rem 1rem' }}
         >
-          Atrakcje ośrodka
+          Mapka ośrodka
         </a>
       </div>
     </div>

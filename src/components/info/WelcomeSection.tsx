@@ -7,8 +7,8 @@ interface WelcomeSectionProps {
 
 const WELCOME_MESSAGE: Record<WeddingPhase, string> = {
   before: 'Kochani, nie możemy się już doczekać!\nPoniżej garść informacji organizacyjnych.',
-  during: 'Cieszymy się, że jesteście!\nŻyczymy Wam szampańskiej zabawy.\nSprawdźcie, co dla Was przygotowaliśmy.',
-  after: 'Dziękujemy za Waszą obecność!\nMamy nadzieję, że dobrze się bawiliście\ni będziecie miło wspominać ten dzień.',
+  during: 'Cieszymy się, że jesteście!\nŻyczymy Wam szampańskiej\u00A0zabawy.\nSprawdźcie, co dla Was przygotowaliśmy.',
+  after: 'Dziękujemy za Waszą obecność!\nMamy nadzieję, że\u00A0dobrze\u00A0się\u00A0bawiliście\ni będziecie miło wspominać ten\u00A0dzień.',
 };
 
 const WelcomeSection = ({ phase }: WelcomeSectionProps) => {

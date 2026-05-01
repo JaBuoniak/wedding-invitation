@@ -411,12 +411,12 @@
 /* ===== QUIZ ===== */
 
 .info-quiz__question {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 1.1rem;
   color: var(--color-text);
   margin-bottom: 1.5rem;
   line-height: 1.5;
-  font-style: italic;
+  font-weight: 500;
 }
 
 .info-quiz__options {

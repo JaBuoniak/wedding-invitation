@@ -6,7 +6,7 @@ const GALLERY_DESC: Record<WeddingPhase, string> = {
   before:
     'Utrwaleniem ślubu w kościele zajmą się profesjonaliści, ale potem liczymy na Was!\nNie oszczędzajcie aparatu!',
   during:
-    'Zróbcie nam pamiątkę z Waszej perspektywy,\na potem wrzućcie tu zdjęcia i filmiki z wesela.',
+    'Upamiętnijcie ten dzień z Waszej perspektywy,\na potem wrzućcie tu zdjęcia i filmiki z wesela.',
   after:
     'Macie jakieś fajne ujęcia?\nKoniecznie podzielcie się z nami!',
 };
@@ -21,15 +21,17 @@ const GallerySection = ({ phase }: GallerySectionProps) => {
       <p className="info-gallery__label">Wspólna galeria</p>
       <h2 className="info-gallery__title">Zdjęcia i filmy</h2>
       <p className="info-gallery__desc">{GALLERY_DESC[phase]}</p>
-      <a
-        id="btn-open-gallery"
-        href={GALLERY_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="info-gallery__btn"
-      >
-        Dodaj zdjęcia i filmy
-      </a>
+      {phase !== 'before' && (
+        <a
+          id="btn-open-gallery"
+          href={GALLERY_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="info-gallery__btn"
+        >
+          Dodaj zdjęcia i filmy
+        </a>
+      )}
     </section>
   );
 };

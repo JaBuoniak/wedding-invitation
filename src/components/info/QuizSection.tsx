@@ -142,7 +142,7 @@ const QuizSection = () => {
 
   return (
     <div>
-      <p className="info-quiz__question">„{question.question}"</p>
+      <p className="info-quiz__question">{question.question}</p>
 
       <div className="info-quiz__options">
         <button

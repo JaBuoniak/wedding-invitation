@@ -1,168 +1,178 @@
 import { useState } from 'react';
-import { Clock, Navigation, Home, HelpCircle, Phone, Star } from 'lucide-react';
-import './info.css';
-
-import { getWeddingPhase, isSeatSearchActive } from './weddingPhase';
+import { Navigation, Home, Phone, Clock, Star, HelpCircle } from 'lucide-react';
 import WelcomeSection from './WelcomeSection';
 import GallerySection from './GallerySection';
-import SeatSearchSection from './SeatSearchSection';
 import AccordionSection from './AccordionSection';
-import DayPlanSection from './DayPlanSection';
-import AttractionsSection from './AttractionsSection';
 import TravelSection from './TravelSection';
 import StaySection from './StaySection';
-import QuizSection from './QuizSection';
 import ContactSection from './ContactSection';
+import DayPlanSection from './DayPlanSection';
+import AttractionsSection from './AttractionsSection';
+import QuizSection from './QuizSection';
+import SeatSearchSection from './SeatSearchSection';
 import FooterGallerySection from './FooterGallerySection';
+import { getWeddingPhase } from './weddingPhase';
+import type { WeddingPhase } from './weddingPhase';
+import './info.css';
 
-type SectionId =
-  | 'plan'
-  | 'attractions'
-  | 'travel'
-  | 'stay'
-  | 'quiz'
-  | 'contact';
+interface InfoPageProps {
+  phase?: WeddingPhase;
+}
 
-const InfoPage = () => {
-  const phase = getWeddingPhase();
-  const showSeatSearch = isSeatSearchActive();
-  const [openSection, setOpenSection] = useState<SectionId | null>(null);
+const InfoPage = ({ phase: propsPhase }: InfoPageProps) => {
+  const phase = propsPhase || getWeddingPhase();
+  const [openSections, setOpenSections] = useState<string[]>([]);
+
+  // Wyszukiwarka miejsc dostępna tylko w dniu wesela (lub wg flagi)
+  const showSeatSearch = phase === 'during';
 
   const handleToggle = (id: string) => {
-    setOpenSection((prev) => (prev === id ? null : (id as SectionId)));
+    setOpenSections((prev) =>
+      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
+    );
   };
 
   return (
     <div className="info-page">
       <WelcomeSection phase={phase} />
 
-      <div style={{ height: '1.5rem' }} />
-
-      {showSeatSearch && (
+      {/* ===== FAZA: PRZED ŚLUBEM ===== */}
+      {phase === 'before' && (
         <>
-          <SeatSearchSection />
           <div style={{ height: '1.5rem' }} />
+          <div className="info-accordion">
+            <AccordionSection
+              id="travel"
+              title="Dojazd"
+              Icon={Navigation}
+              isOpen={openSections.includes('travel')}
+              onToggle={handleToggle}
+            >
+              <TravelSection />
+            </AccordionSection>
+
+            <AccordionSection
+              id="stay"
+              title="Noclegi"
+              Icon={Home}
+              isOpen={openSections.includes('stay')}
+              onToggle={handleToggle}
+            >
+              <StaySection />
+            </AccordionSection>
+
+            <AccordionSection
+              id="attractions"
+              title="Atrakcje"
+              Icon={Star}
+              isOpen={openSections.includes('attractions')}
+              onToggle={handleToggle}
+            >
+              <AttractionsSection phase={phase} />
+            </AccordionSection>
+
+            <AccordionSection
+              id="contact"
+              title="Kontakt"
+              Icon={Phone}
+              isOpen={openSections.includes('contact')}
+              onToggle={handleToggle}
+            >
+              <ContactSection phase={phase} />
+            </AccordionSection>
+          </div>
+
+          <div style={{ height: '1.5rem' }} />
+          <GallerySection phase={phase} />
         </>
       )}
 
-      <GallerySection phase={phase} />
-
-      <div style={{ height: '1.5rem' }} />
-
-      {/* ===== BEFORE & DURING — accordion ===== */}
-      {phase !== 'after' && (
-        <div className="info-accordion">
-
-          {/* ===== BEFORE WEDDING ===== */}
-          {phase === 'before' && (
-            <>
-              <AccordionSection
-                id="travel"
-                title="Dojazd"
-                Icon={Navigation}
-                isOpen={openSection === 'travel'}
-                onToggle={handleToggle}
-              >
-                <TravelSection />
-              </AccordionSection>
-
-              <AccordionSection
-                id="stay"
-                title="Noclegi"
-                Icon={Home}
-                isOpen={openSection === 'stay'}
-                onToggle={handleToggle}
-              >
-                <StaySection />
-              </AccordionSection>
-
-              <AccordionSection
-                id="contact"
-                title="Kontakt"
-                Icon={Phone}
-                isOpen={openSection === 'contact'}
-                onToggle={handleToggle}
-              >
-                <ContactSection phase={phase} />
-              </AccordionSection>
-            </>
-          )}
-
-          {/* ===== DURING WEDDING ===== */}
-          {phase === 'during' && (
-            <>
-              <AccordionSection
-                id="plan"
-                title="Plan dnia"
-                Icon={Clock}
-                isOpen={openSection === 'plan'}
-                onToggle={handleToggle}
-              >
-                <DayPlanSection />
-              </AccordionSection>
-
-              <AccordionSection
-                id="attractions"
-                title="Atrakcje"
-                Icon={Star}
-                isOpen={openSection === 'attractions'}
-                onToggle={handleToggle}
-              >
-                <AttractionsSection />
-              </AccordionSection>
-
-              <AccordionSection
-                id="quiz"
-                title="Quiz"
-                Icon={HelpCircle}
-                isOpen={openSection === 'quiz'}
-                onToggle={handleToggle}
-              >
-                <QuizSection />
-              </AccordionSection>
-
-              <AccordionSection
-                id="contact"
-                title="Kontakt"
-                Icon={Phone}
-                isOpen={openSection === 'contact'}
-                onToggle={handleToggle}
-              >
-                <ContactSection phase={phase} />
-              </AccordionSection>
-            </>
-          )}
-
-        </div>
-      )}
-
-      {/* Footer gallery — only during */}
+      {/* ===== FAZA: W TRAKCIE WESELA ===== */}
       {phase === 'during' && (
         <>
+          <div style={{ height: '1.5rem' }} />
+          {showSeatSearch && (
+            <>
+              <SeatSearchSection />
+              <div style={{ height: '1.5rem' }} />
+            </>
+          )}
+
+          <GallerySection phase={phase} />
+          <div style={{ height: '1.5rem' }} />
+
+          <div className="info-accordion">
+            <AccordionSection
+              id="plan"
+              title="Plan dnia"
+              Icon={Clock}
+              isOpen={openSections.includes('plan')}
+              onToggle={handleToggle}
+            >
+              <DayPlanSection />
+            </AccordionSection>
+
+            <AccordionSection
+              id="attractions"
+              title="Atrakcje"
+              Icon={Star}
+              isOpen={openSections.includes('attractions')}
+              onToggle={handleToggle}
+            >
+              <AttractionsSection phase={phase} />
+            </AccordionSection>
+
+            <AccordionSection
+              id="quiz"
+              title="Quiz"
+              Icon={HelpCircle}
+              isOpen={openSections.includes('quiz')}
+              onToggle={handleToggle}
+            >
+              <QuizSection />
+            </AccordionSection>
+
+            <AccordionSection
+              id="contact"
+              title="Kontakt"
+              Icon={Phone}
+              isOpen={openSections.includes('contact')}
+              onToggle={handleToggle}
+            >
+              <ContactSection phase={phase} />
+            </AccordionSection>
+          </div>
+
           <div style={{ height: '0.5rem' }} />
           <FooterGallerySection />
         </>
       )}
 
-      {/* ===== AFTER WEDDING ===== */}
+      {/* ===== FAZA: PO WESELU ===== */}
       {phase === 'after' && (
-        <div className="info-accordion">
-          <section className="info-thankyou">
-            <p className="info-thankyou__text info-thankyou__text--secondary">
-              Zdjęcia będą dostępne do oglądania już w tym tygodniu.
-            </p>
-          </section>
+        <>
+          <div style={{ height: '1.5rem' }} />
+          <GallerySection phase={phase} />
 
-          <AccordionSection
-            id="contact"
-            title="Kontakt"
-            Icon={Phone}
-            isOpen={openSection === 'contact'}
-            onToggle={handleToggle}
-          >
-            <ContactSection phase={phase} />
-          </AccordionSection>
-        </div>
+          <div className="info-accordion">
+            <section className="info-thankyou">
+              <p className="info-thankyou__text info-thankyou__text--secondary">
+                Zdjęcia będą dostępne do oglądania<br />
+                już w tym tygodniu.
+              </p>
+            </section>
+
+            <AccordionSection
+              id="contact"
+              title="Kontakt"
+              Icon={Phone}
+              isOpen={openSections.includes('contact')}
+              onToggle={handleToggle}
+            >
+              <ContactSection phase={phase} />
+            </AccordionSection>
+          </div>
+        </>
       )}
 
       <footer
