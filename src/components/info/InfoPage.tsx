@@ -11,7 +11,7 @@ import AttractionsSection from './AttractionsSection';
 import QuizSection from './QuizSection';
 import SeatSearchSection from './SeatSearchSection';
 import FooterGallerySection from './FooterGallerySection';
-import { getWeddingPhase } from './weddingPhase';
+import { getWeddingPhase, isTravelVisible, isSeatSearchActive } from './weddingPhase';
 import type { WeddingPhase } from './weddingPhase';
 import './info.css';
 
@@ -23,8 +23,9 @@ const InfoPage = ({ phase: propsPhase }: InfoPageProps) => {
   const phase = propsPhase || getWeddingPhase();
   const [openSections, setOpenSections] = useState<string[]>([]);
 
-  // Wyszukiwarka miejsc dostępna tylko w dniu wesela (lub wg flagi)
-  const showSeatSearch = phase === 'during';
+  // Wyszukiwarka miejsc dostępna tylko w dniu wesela (do 18:00)
+  const showSeatSearch = isSeatSearchActive();
+  const showTravel = isTravelVisible();
 
   const handleToggle = (id: string) => {
     setOpenSections((prev) =>
@@ -102,6 +103,18 @@ const InfoPage = ({ phase: propsPhase }: InfoPageProps) => {
           <div style={{ height: '1.5rem' }} />
 
           <div className="info-accordion">
+            {showTravel && (
+              <AccordionSection
+                id="travel"
+                title="Dojazd"
+                Icon={Navigation}
+                isOpen={openSections.includes('travel')}
+                onToggle={handleToggle}
+              >
+                <TravelSection />
+              </AccordionSection>
+            )}
+
             <AccordionSection
               id="plan"
               title="Plan dnia"

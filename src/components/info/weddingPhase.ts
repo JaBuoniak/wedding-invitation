@@ -7,16 +7,23 @@ const WEDDING_DAY = 13;
 const WEDDING_HOUR = 15;
 const SEAT_SEARCH_END_HOUR = 18;
 
-export const isSeatSearchActive = (): boolean => {
-  // 1. Sprawdzamy fazę (uwzględnia parametry URL ?phase=during)
+const TRAVEL_END_HOUR = 17;
+
+export const isTravelVisible = (): boolean => {
   const phase = getWeddingPhase();
+  if (phase === 'before') return true;
+  if (phase === 'after') return false;
 
-  // Wyszukiwarka dostępna tylko w fazie 'during'
-  if (phase !== 'during') {
-    return false;
-  }
+  // W fazie 'during' pokazujemy dojazd tylko do 17:00
+  const now = new Date();
+  return now < new Date(WEDDING_YEAR, WEDDING_MONTH, WEDDING_DAY, TRAVEL_END_HOUR);
+};
 
-  // 2. Jeśli jest faza during, sprawdzamy czy nie jest po 18:00 dnia ślubu
+export const isSeatSearchActive = (): boolean => {
+  const phase = getWeddingPhase();
+  if (phase !== 'during') return false;
+
+  // Wyszukiwarka dostępna tylko do 18:00 dnia ślubu
   const now = new Date();
   return now < new Date(WEDDING_YEAR, WEDDING_MONTH, WEDDING_DAY, SEAT_SEARCH_END_HOUR);
 };
