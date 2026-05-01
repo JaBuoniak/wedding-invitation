@@ -429,16 +429,16 @@
   transform: scale(0.97);
 }
 
-.info-quiz__option--selected-ania {
-  background: #e8f0fe;
+.info-quiz__option--selected-a {
+  background: #dde9f5;
   border-color: var(--color-primary);
   color: var(--color-primary);
 }
 
-.info-quiz__option--selected-pawel {
-  background: #fce8d4;
-  border-color: #c07a40;
-  color: #8b5020;
+.info-quiz__option--selected-b {
+  background: #f5e8dc;
+  border-color: #b08060;
+  color: #7a5030;
 }
 
 .info-quiz__bar-wrapper {
@@ -449,32 +449,52 @@
   background: var(--color-border);
 }
 
-.info-quiz__bar-ania {
-  background: var(--color-primary);
+/* Słupek A – wyrównanie do lewej */
+.info-quiz__bar-a {
+  background: #b8cce0;
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-left: 0.5rem;
   font-size: 0.8rem;
   font-weight: 600;
-  color: white;
+  color: #2c3e50;
   transition: width 0.6s ease;
-  min-width: 2rem;
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
 
-.info-quiz__bar-pawel {
-  background: #c07a40;
+/* Słupek B – ciemniejszy odcień tego samego błękitu */
+.info-quiz__bar-b {
+  background: #7fa8c8;
   height: 100%;
-  flex: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  padding-right: 0.5rem;
   font-size: 0.8rem;
   font-weight: 600;
-  color: white;
+  color: #ffffff;
   transition: width 0.6s ease;
-  min-width: 2rem;
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
+
+/* Poprawna odpowiedź – delikatna szałwiowa zieleń */
+.info-quiz__bar--correct {
+  background: #b2d4c0;
+  color: #2c3e50;
+}
+
+/* Błędna odpowiedź – neutralna szarość */
+.info-quiz__bar--incorrect {
+  background: var(--color-border);
+  color: var(--color-text-light);
+}
+
 
 .info-quiz__bar-labels {
   display: flex;
@@ -483,6 +503,49 @@
   font-size: 0.78rem;
   color: var(--color-text-light);
 }
+
+/* Przyciski po zagłosowaniu */
+.info-quiz__option--selected-a {
+  background: #e8f0fe;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.info-quiz__option--selected-b {
+  background: #fce8d4;
+  border-color: #c07a40;
+  color: #8b5020;
+}
+
+.info-quiz__option--correct {
+  background: #e8f5e9;
+  border-color: #2e7d32;
+  color: #1b5e20;
+}
+
+.info-quiz__option--wrong {
+  background: #ffebee;
+  border-color: #c62828;
+  color: #b71c1c;
+}
+
+.info-quiz__option--disabled {
+  opacity: 0.55;
+}
+
+.info-quiz__option-check {
+  font-weight: 700;
+}
+
+/* Podpowiedź o poprawnej odpowiedzi */
+.info-quiz__correct-hint {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  text-align: center;
+  font-style: italic;
+}
+
 
 /* ===== CONTACT ===== */
 

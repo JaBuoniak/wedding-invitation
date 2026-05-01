@@ -120,20 +120,37 @@ CREATE POLICY "Każdy może odczytać nieznane logi"
 ON unknown_visits FOR SELECT 
 USING (true);
 
--- TABELA 5: Odpowiedzi quizu
-CREATE TABLE quiz_answers (
-  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  question_id TEXT NOT NULL,
-  answer TEXT NOT NULL, -- 'ania' lub 'pawel'
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+-- TABELA 5: Pytania i statystyki quizu
+CREATE TABLE quiz (
+  id            BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  question      TEXT    NOT NULL,
+  option_a      TEXT    NOT NULL,
+  option_b      TEXT    NOT NULL,
+  answers_a     INTEGER NOT NULL DEFAULT 0,
+  answers_b     INTEGER NOT NULL DEFAULT 0,
+  correct_answer TEXT   -- 'a' lub 'b', NULL jezeli pytanie bez jednoznacznej odpowiedzi
 );
 
-ALTER TABLE quiz_answers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE quiz ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Każdy może odpowiedzieć na quiz"
-ON quiz_answers FOR INSERT
-WITH CHECK (true);
-
-CREATE POLICY "Każdy może odczytać statystyki quizu"
-ON quiz_answers FOR SELECT
+CREATE POLICY "Kazdy moze odczytac pytania quizu"
+ON quiz FOR SELECT
 USING (true);
+
+-- Funkcja RPC do bezpiecznej (atomowej) inkrementacji licznika
+CREATE OR REPLACE FUNCTION increment_quiz_answer(question_id BIGINT, chosen TEXT)
+RETURNS VOID AS $$
+BEGIN
+  IF chosen = 'a' THEN
+    UPDATE quiz SET answers_a = answers_a + 1 WHERE id = question_id;
+  ELSIF chosen = 'b' THEN
+    UPDATE quiz SET answers_b = answers_b + 1 WHERE id = question_id;
+  END IF;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
+
+-- Przykladowe pytania
+INSERT INTO quiz (question, option_a, option_b, correct_answer) VALUES
+  ('Kto pierwszy powiedzial "kocham cie"?',              'Ania',  'Pawel', NULL),
+  ('Kto bardziej sie denerwował przed pierwsza randka?', 'Ania',  'Pawel', NULL),
+  ('Kto zaproponowal wspolne zamieszkanie?',             'Ania',  'Pawel', NULL);
