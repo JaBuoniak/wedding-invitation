@@ -2,17 +2,9 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { trackVisit } from '../utils/visitTracker';
-import Header from './Header';
-import InvitationContent from './InvitationContent';
-import LocationMap from './LocationMap';
-import RsvpForm from './RsvpForm';
-import AccommodationDetails from './AccommodationDetails';
-import WaveDecoration from './decorations/WaveDecoration';
-import YachtDecoration from './decorations/YachtDecoration';
 import SeagullDecoration from './decorations/SeagullDecoration';
-
-
 import HomePage from './HomePage';
+import InfoPage from './info/InfoPage';
 
 // Typy zgodne z bazą danych
 type Invitation = {
@@ -77,44 +69,7 @@ const InvitationPage = () => {
         return <HomePage />;
     }
 
-    return (
-        <div className="container">
-            <Header />
-
-            <main>
-                <InvitationContent
-                    who={invitation.guest_who}
-                    and={invitation.guest_and}
-                    with={invitation.guest_with}
-                />
-
-                <WaveDecoration />
-
-                <LocationMap />
-
-                <WaveDecoration />
-
-                <AccommodationDetails />
-
-                <WaveDecoration />
-
-                <RsvpForm
-                    slug={invitation.slug}
-                    maxAdults={invitation.max_adults}
-                    maxChildren={invitation.max_children}
-                    maxUnder10={invitation.max_under10}
-                    maxUnder2={invitation.max_under2}
-                />
-            </main>
-
-            <footer className="text-center text-sm text-muted">
-                <div className="mb-3">
-                    <YachtDecoration />
-                    <p>&copy; {new Date().getFullYear()} Ania & Paweł</p>
-                </div>
-            </footer>
-        </div>
-    );
+    return <InfoPage slug={invitation.slug} />;
 };
 
 export default InvitationPage;

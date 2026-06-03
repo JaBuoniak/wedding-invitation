@@ -6,7 +6,6 @@ const WEDDING_MONTH = 5; // 0-indexed
 const WEDDING_DAY = 13;
 const WEDDING_HOUR = 15;
 const SEAT_SEARCH_END_HOUR = 18;
-
 const TRAVEL_END_HOUR = 17;
 
 export const isTravelVisible = (): boolean => {

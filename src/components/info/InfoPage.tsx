@@ -1,10 +1,12 @@
-import { useState } from 'react';
-import { Navigation, Home, Phone, Clock, Star, HelpCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Navigation, Home, Phone, Clock, Star, HelpCircle, Utensils } from 'lucide-react';
+import { supabase } from '../../supabaseClient';
 import WelcomeSection from './WelcomeSection';
 import GallerySection from './GallerySection';
 import AccordionSection from './AccordionSection';
 import TravelSection from './TravelSection';
 import StaySection from './StaySection';
+import FoodSection from './FoodSection';
 import ContactSection from './ContactSection';
 import DayPlanSection from './DayPlanSection';
 import AttractionsSection from './AttractionsSection';
@@ -17,11 +19,66 @@ import './info.css';
 
 interface InfoPageProps {
   phase?: WeddingPhase;
+  slug?: string;
 }
 
-const InfoPage = ({ phase: propsPhase }: InfoPageProps) => {
+const InfoPage = ({ phase: propsPhase, slug }: InfoPageProps) => {
   const phase = propsPhase || getWeddingPhase();
   const [openSections, setOpenSections] = useState<string[]>([]);
+  const [hasHouse, setHasHouse] = useState<boolean | null>(null);
+  const [stayData, setStayData] = useState<{
+    slug: string | null;
+    houseNumber: string | null;
+    guestCount: number;
+    before: boolean;
+    after: boolean;
+  } | null>(null);
+
+  useEffect(() => {
+    const fetchGuestStay = async () => {
+      const activeSlug = slug || new URLSearchParams(window.location.search).get('slug');
+      if (!activeSlug) {
+        // Wersja uniwersalna: pokazuj sekcje
+        setHasHouse(true);
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase
+          .from('guests')
+          .select('house_number, before, after')
+          .eq('invitation_slug', activeSlug);
+
+        if (error) {
+          console.error('Error fetching guest stay:', error);
+          setHasHouse(false);
+        } else if (data && data.length > 0) {
+          const firstWithHouse = data.find(g => g.house_number !== null && g.house_number !== undefined);
+          const houseNumber = firstWithHouse ? firstWithHouse.house_number : null;
+          
+          if (houseNumber) {
+            setHasHouse(true);
+            setStayData({
+              slug: activeSlug,
+              houseNumber,
+              guestCount: data.length,
+              before: data[0].before || false,
+              after: data[0].after || false,
+            });
+          } else {
+            setHasHouse(false);
+          }
+        } else {
+          setHasHouse(false);
+        }
+      } catch (err) {
+        console.error('Unexpected error fetching stay check:', err);
+        setHasHouse(false);
+      }
+    };
+
+    fetchGuestStay();
+  }, [slug]);
 
   // Wyszukiwarka miejsc dostępna tylko w dniu wesela (do 18:00)
   const showSeatSearch = isSeatSearchActive();
@@ -32,6 +89,11 @@ const InfoPage = ({ phase: propsPhase }: InfoPageProps) => {
       prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
     );
   };
+
+  const activeSlug = slug || new URLSearchParams(window.location.search).get('slug');
+  if (hasHouse === null && activeSlug) {
+    return null; // Oczekiwanie na weryfikację bazy danych
+  }
 
   return (
     <div className="info-page">
@@ -52,15 +114,29 @@ const InfoPage = ({ phase: propsPhase }: InfoPageProps) => {
               <TravelSection />
             </AccordionSection>
 
-            <AccordionSection
-              id="stay"
-              title="Noclegi"
-              Icon={Home}
-              isOpen={openSections.includes('stay')}
-              onToggle={handleToggle}
-            >
-              <StaySection />
-            </AccordionSection>
+            {hasHouse && (
+              <AccordionSection
+                id="stay"
+                title="Noclegi"
+                Icon={Home}
+                isOpen={openSections.includes('stay')}
+                onToggle={handleToggle}
+              >
+                <StaySection slug={slug} stayData={stayData} />
+              </AccordionSection>
+            )}
+
+            {hasHouse && (
+              <AccordionSection
+                id="food"
+                title="Jedzenie"
+                Icon={Utensils}
+                isOpen={openSections.includes('food')}
+                onToggle={handleToggle}
+              >
+                <FoodSection />
+              </AccordionSection>
+            )}
 
             <AccordionSection
               id="contact"
@@ -102,6 +178,30 @@ const InfoPage = ({ phase: propsPhase }: InfoPageProps) => {
                 onToggle={handleToggle}
               >
                 <TravelSection />
+              </AccordionSection>
+            )}
+            
+            {hasHouse && showTravel && (
+              <AccordionSection
+                id="stay"
+                title="Noclegi"
+                Icon={Home}
+                isOpen={openSections.includes('stay')}
+                onToggle={handleToggle}
+              >
+                <StaySection slug={slug} stayData={stayData} />
+              </AccordionSection>
+            )}
+
+            {hasHouse && showTravel && (
+              <AccordionSection
+                id="food"
+                title="Jedzenie"
+                Icon={Utensils}
+                isOpen={openSections.includes('food')}
+                onToggle={handleToggle}
+              >
+                <FoodSection />
               </AccordionSection>
             )}
 
