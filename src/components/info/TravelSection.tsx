@@ -1,3 +1,5 @@
+import { MapPin } from "lucide-react";
+
 const TravelSection = () => {
   return (
     <div>
@@ -13,7 +15,7 @@ const TravelSection = () => {
           className="info-btn info-btn--ghost"
           style={{ fontSize: '0.9rem', padding: '0.7rem 1rem' }}
         >
-          Otwórz w Mapach
+          <MapPin size={16} /> Otwórz w Mapach
         </a>
       </div>
 
@@ -29,7 +31,7 @@ const TravelSection = () => {
           className="info-btn info-btn--ghost"
           style={{ fontSize: '0.9rem', padding: '0.7rem 1rem' }}
         >
-          Otwórz w Mapach
+          <MapPin size={16} /> Otwórz w Mapach
         </a>
       </div>
     </div>
