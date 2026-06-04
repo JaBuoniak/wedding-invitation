@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../supabaseClient';
 import { ExternalLink, MapIcon } from 'lucide-react';
+import map from '../../assets/images/mapka.png';
 
 interface StayData {
   slug: string | null;
@@ -121,7 +122,7 @@ const StaySection = ({ slug: propsSlug, stayData: propsStayData }: StaySectionPr
         </p>
         <a
           id="btn-resort-map"
-          href="https://pieknybrzeg.pl/wp-content/uploads/2025/08/mapa-www.jpg"
+          href={map}
           target="_blank"
           rel="noopener noreferrer"
           className="info-btn info-btn--ghost"
