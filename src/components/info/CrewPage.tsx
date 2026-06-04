@@ -233,14 +233,12 @@ const CrewPage = () => {
                       <span className="info-dayplan__title" style={{ fontWeight: isActive ? '600' : '500' }}>
                         {item.title}
                       </span>
+
                       {isActive && <span className="crew-active-badge">Teraz</span>}
+                      {item.duration && <span className="crew-duration-tag">{item.duration} min</span>}
                     </div>
-                    {item.description && (
-                      <span className="info-dayplan__description">{item.description}</span>
-                    )}
-                    {item.duration && (
-                      <span className="crew-duration-tag">Czas trwania: {item.duration} min</span>
-                    )}
+                    {item.description && <span className="info-dayplan__description">{item.description}</span>}
+
                   </div>
                 </div>
               );
