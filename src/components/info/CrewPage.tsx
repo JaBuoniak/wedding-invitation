@@ -5,7 +5,7 @@ import { supabase } from '../../supabaseClient';
 import TravelSection from './TravelSection';
 import AttractionsSection from './AttractionsSection';
 import AccordionSection from './AccordionSection';
-import imageHeader from '../../assets/photo/header/07.jpg';
+import imageHeader from '../../assets/photo/header/sn42.jpg';
 import './info.css';
 
 type ScheduleItem = {
@@ -234,14 +234,12 @@ const CrewPage = () => {
                       <span className="info-dayplan__title" style={{ fontWeight: isActive ? '600' : '500' }}>
                         {item.title}
                       </span>
+
                       {isActive && <span className="crew-active-badge">Teraz</span>}
+                      {item.duration && <span className="crew-duration-tag">{item.duration} min</span>}
                     </div>
-                    {item.description && (
-                      <span className="info-dayplan__description">{item.description}</span>
-                    )}
-                    {item.duration && (
-                      <span className="crew-duration-tag">Czas trwania: {item.duration} min</span>
-                    )}
+                    {item.description && <span className="info-dayplan__description">{item.description}</span>}
+
                   </div>
                 </div>
               );
