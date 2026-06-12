@@ -32,6 +32,7 @@ const FULL_CONTACTS = [
   { name: 'Paweł', role: 'Pan Młody', phone: '+48600228402', display: '600 228 402' },
   { name: 'Krzysiek', role: 'Świadek', phone: '+48737458879', display: '737 458 879' },
   { name: 'Renia', role: 'Świadkowa', phone: '+48880422968', display: '880 422 968' },
+  { name: 'Natalia', role: 'Tawerna - koordynatorka', phone: '+48602518557', display: '602 518 557' },
   { name: 'Piękny Brzeg', role: 'Recepcja', phone: '+48570955544', display: '570 955 544' },
 ];
 
